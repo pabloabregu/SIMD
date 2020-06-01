@@ -51,7 +51,8 @@ int main (int argc, char* argv[]) {
 	start = clock();
 
 	// tonos de grises
-	blancoYNegro (&bmpData);
+	//blancoYNegro (&bmpData);
+	aclarar(&bmpData, 25);
 
 	end = clock();
 	FILE *out = fopen("results.csv", "a");  
@@ -63,7 +64,7 @@ int main (int argc, char* argv[]) {
 	
 	printf("\nTiempo de proceso: %ld ticks.\n\n", end-start);
 
-	if (saveBmpFile ("lena.bmp", &bmpData) != 0)
+	if (saveBmpFile ("lena_aclarar.bmp", &bmpData) != 0)
 		asm_Print("Error al grabar el archivo!");
 	
 	// libera memoria

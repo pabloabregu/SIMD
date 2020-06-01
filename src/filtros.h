@@ -3,8 +3,8 @@
 
 #include "bmp.h"
 
-typedef struct tagFILTRO {
-
+typedef struct tagFILTRO
+{
 	float RR, RG, RB;
 	float GR, GG, GB;
 	float BR, BG, BB;
@@ -12,8 +12,9 @@ typedef struct tagFILTRO {
 
 FILTRO SEPIA;
 
-void filtro (BMPDATA*, FILTRO);
-void blancoYNegro (BMPDATA*);
-int cantPixels (BMPDATA*);
-unsigned char mediana (unsigned char*, int);
+void filtro(BMPDATA *, FILTRO);
+void blancoYNegro(BMPDATA *);
+void aclarar(BMPDATA *, int n);
+int cantPixels(BMPDATA *);
+unsigned char mediana(unsigned char *, int);
 #endif
