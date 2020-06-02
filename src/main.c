@@ -49,11 +49,10 @@ int main (int argc, char* argv[]) {
 	
 	// comienza a medir el tiempo
 	start = clock();
-
 	// tonos de grises
-	//blancoYNegro (&bmpData);
-	aclarar(&bmpData, 25);
-
+//	blancoYNegro (&bmpData);
+//	aclarar(&bmpData , 50);
+	medianFilter(&bmpData);
 	end = clock();
 	FILE *out = fopen("results.csv", "a");  
 	int tiempo = end-start;
@@ -64,7 +63,7 @@ int main (int argc, char* argv[]) {
 	
 	printf("\nTiempo de proceso: %ld ticks.\n\n", end-start);
 
-	if (saveBmpFile ("lena_aclarar.bmp", &bmpData) != 0)
+	if (saveBmpFile ("lena_mod.bmp", &bmpData) != 0)
 		asm_Print("Error al grabar el archivo!");
 	
 	// libera memoria
