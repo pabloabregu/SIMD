@@ -2,6 +2,7 @@ section .data
 ;divisor equ 255
 section .text
 global mulSIMD 
+
 mulSIMD: ; tell linker entry point
  
    
@@ -30,4 +31,3 @@ mulSIMD: ; tell linker entry point
    pop ebp ;ahora sp apunto a ip de sum
    
    ret 
-  

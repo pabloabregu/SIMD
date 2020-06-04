@@ -16,20 +16,11 @@
 
 // DOC_HELP
 
-
-
-extern int asmPrint
-(char * msg, int lenght);
-
-
-int asm_Print(char * msg){
-  return asmPrint(msg,strlen(msg));
-}
 /******************************************************************************/
 
 
 int main (int argc, char* argv[]) {
-	asm_Print("Organización del Computador 2.\nTrabajo Práctico Nro. 2\nPrograma para procesamiento de imágenes BMP.\n");
+	printf("Organización del Computador 2.\nTrabajo Práctico Nro. 2\nPrograma para procesamiento de imágenes BMP.\n");
 	int resolucion = 1080;
 	BMPDATA bmpData;
 	BMPDATA bmpData2;
@@ -59,11 +50,15 @@ int main (int argc, char* argv[]) {
 	start = clock();
 //Llamadas a filtros
 
-//	blancoYNegro (&bmpData);
-//	aclarar(&bmpData , 50);
+	//blancoYNegro (&bmpData);
+	//aclarar(&bmpData , 50);
 //	medianFilter(&bmpData);
 //	blend(&bmpData,&bmpData2);
-	blendSIMD(&bmpData,&bmpData2);
+	multiplyBlend(&bmpData,&bmpData2);
+//	blendSIMD(&bmpData,&bmpData2);
+//negativo(&bmpData);
+//escalaDeGrises(&bmpData);
+
 	end = clock();
 	FILE *out = fopen("results.csv", "a");  
 	int tiempo = end-start;
@@ -74,8 +69,8 @@ int main (int argc, char* argv[]) {
 	
 	printf("\nTiempo de proceso: %ld ticks.\n\n", end-start);
 
-	if (saveBmpFile ("blend_result.bmp", &bmpData) != 0)
-		asm_Print("Error al grabar el archivo!");
+	if (saveBmpFile ("lena_aclarar.bmp", &bmpData) != 0)
+		printf("Error al grabar el archivo!");
 	
 	// libera memoria
 	limpiarBmpData(&bmpData);
