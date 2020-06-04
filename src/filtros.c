@@ -165,9 +165,9 @@ void multiplyBlend(BMPDATA *bmpOne, BMPDATA *bmpTwo)
 	printf("ALTO = %i \n ANCHO = %i", bmpOne->infoHeader.biHeight, bmpOne->infoHeader.biWidth);
 	for (int i = 0; i < cantPixels(bmpOne); i++)
 	{
-		//bmpOne->red[i] = asmMultiply(bmpTwo->red[i], bmpOne->red[i]);
-		//bmpOne->green[i] = asmMultiply(bmpTwo->green[i], bmpOne->green[i]);
-		//bmpOne->blue[i] = asmMultiply(bmpTwo->blue[i], bmpOne->blue[i]);
+		bmpOne->red[i] = asmMultiply(bmpTwo->red[i], bmpOne->red[i]);
+		bmpOne->green[i] = asmMultiply(bmpTwo->green[i], bmpOne->green[i]);
+		bmpOne->blue[i] = asmMultiply(bmpTwo->blue[i], bmpOne->blue[i]);
 	}
 }
 

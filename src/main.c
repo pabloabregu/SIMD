@@ -69,7 +69,7 @@ int main (int argc, char* argv[]) {
 	
 	printf("\nTiempo de proceso: %ld ticks.\n\n", end-start);
 
-	if (saveBmpFile ("lena_aclarar.bmp", &bmpData) != 0)
+	if (saveBmpFile ("blend_3.bmp", &bmpData) != 0)
 		printf("Error al grabar el archivo!");
 	
 	// libera memoria
