@@ -132,7 +132,29 @@ void medianFilter(BMPDATA *bmpData){
 
 }
 
-	
+void negativo(BMPDATA *bmpData){
+	for (int i = 0; i < cantPixels(bmpData); i++)
+	{
+		bmpData->red[i]   = 255 - bmpData->red[i];
+		bmpData->green[i] = 255 - bmpData->green[i];
+		bmpData->blue[i]  = 255 - bmpData->blue[i];
+	}
+}
+
+void escalaDeGrises(BMPDATA *bmpData){
+	for (int i = 0; i < cantPixels(bmpData); i++)
+	{
+		int media = calcularMedia(bmpData->red[i], bmpData->green[i], bmpData->blue[i]);
+		bmpData->red[i]   = media;
+		bmpData->green[i] = media;
+		bmpData->blue[i]  = media;
+	}
+}
+
+int calcularMedia(int r, int g, int b){
+	int aux = r + g + b;
+	return aux/3;
+}
 
 
 

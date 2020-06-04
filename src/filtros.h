@@ -15,6 +15,9 @@ FILTRO SEPIA;
 void filtro(BMPDATA *, FILTRO);
 void blancoYNegro(BMPDATA *);
 void aclarar(BMPDATA *, int n);
+void negativo(BMPDATA *bmpData);
+void escalaDeGrises(BMPDATA *bmpData);
+int calcularMedia(int r, int g, int b);
 int cantPixels(BMPDATA *);
 unsigned char mediana(unsigned char *, int);
 #endif

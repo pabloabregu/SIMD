@@ -52,7 +52,10 @@ int main (int argc, char* argv[]) {
 	// tonos de grises
 //	blancoYNegro (&bmpData);
 //	aclarar(&bmpData , 50);
-	medianFilter(&bmpData);
+//	medianFilter(&bmpData);
+//	negativo(&bmpData);
+escalaDeGrises(&bmpData);
+
 	end = clock();
 	FILE *out = fopen("results.csv", "a");  
 	int tiempo = end-start;
@@ -63,7 +66,7 @@ int main (int argc, char* argv[]) {
 	
 	printf("\nTiempo de proceso: %ld ticks.\n\n", end-start);
 
-	if (saveBmpFile ("lena_mod.bmp", &bmpData) != 0)
+	if (saveBmpFile ("lena_grises.bmp", &bmpData) != 0)
 		asm_Print("Error al grabar el archivo!");
 	
 	// libera memoria
