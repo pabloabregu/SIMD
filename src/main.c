@@ -21,6 +21,7 @@
 extern int asmPrint
 (char * msg, int lenght);
 
+
 int asm_Print(char * msg){
   return asmPrint(msg,strlen(msg));
 }
@@ -31,6 +32,7 @@ int main (int argc, char* argv[]) {
 	asm_Print("Organización del Computador 2.\nTrabajo Práctico Nro. 2\nPrograma para procesamiento de imágenes BMP.\n");
 	int resolucion = 1080;
 	BMPDATA bmpData;
+	BMPDATA bmpData2;
 	int i;
 
 	/*printf("Ejecutando con parametros: ");
@@ -39,9 +41,15 @@ int main (int argc, char* argv[]) {
 	}*/
 
 	// carga el archivo bmp
-	if (loadBmpFile ("lena.bmp", &bmpData) != 0) {
+	if (loadBmpFile ("blend.bmp", &bmpData) != 0) {
 
-		printf ("Error al leer el archivo %s\n\n", "lena.bmp");
+		printf ("Error al leer el archivo %s\n\n", "blend.bmp");
+		return 1;
+	}
+
+	if (loadBmpFile ("blend2.bmp", &bmpData2) != 0) {
+
+		printf ("Error al leer el archivo %s\n\n", "blend2.bmp");
 		return 1;
 	}
 
@@ -49,13 +57,13 @@ int main (int argc, char* argv[]) {
 	
 	// comienza a medir el tiempo
 	start = clock();
-	// tonos de grises
+//Llamadas a filtros
+
 //	blancoYNegro (&bmpData);
 //	aclarar(&bmpData , 50);
 //	medianFilter(&bmpData);
-//	negativo(&bmpData);
-escalaDeGrises(&bmpData);
-
+//	blend(&bmpData,&bmpData2);
+	blendSIMD(&bmpData,&bmpData2);
 	end = clock();
 	FILE *out = fopen("results.csv", "a");  
 	int tiempo = end-start;
@@ -66,10 +74,11 @@ escalaDeGrises(&bmpData);
 	
 	printf("\nTiempo de proceso: %ld ticks.\n\n", end-start);
 
-	if (saveBmpFile ("lena_grises.bmp", &bmpData) != 0)
+	if (saveBmpFile ("blend_result.bmp", &bmpData) != 0)
 		asm_Print("Error al grabar el archivo!");
 	
 	// libera memoria
 	limpiarBmpData(&bmpData);
+	limpiarBmpData(&bmpData2);
 	return 0;
 }

@@ -1,4 +1,5 @@
-#rm tp;
+rm tp;
 nasm -f elf32 helloworld.s -o helloworld.o;
-gcc -m32 main.c lectorBmp.c filtros.c helloworld.o -o tp;
+nasm -f elf32 mulSIMD.s -o mulSIMD.o
+gcc -m32 main.c lectorBmp.c filtros.c mulSIMD.o  helloworld.o -o tp;
 ./tp;

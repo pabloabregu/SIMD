@@ -8,11 +8,15 @@
 #define min(a,b) (((a) < (b)) ? (a) : (b))
 #define max(a,b) (((a) > (b)) ? (a) : (b))
 
-FILTRO SEPIA = { 
-	.393, .760, .189,
-	.349, .686, .168,
-	.272, .534, .131
-};
+extern unsigned char mulBlend(unsigned char  a, unsigned char  b);
+extern unsigned char  * mulSIMD(unsigned  char * a , unsigned char * b);
+extern unsigned char divide(unsigned char  a);
+
+//FILTRO SEPIA = { 
+//	.393, .760, .189,
+//	.349, .686, .168,
+//	.272, .534, .131
+//};
 
 typedef struct {
 	unsigned char r;
@@ -132,30 +136,52 @@ void medianFilter(BMPDATA *bmpData){
 
 }
 
-void negativo(BMPDATA *bmpData){
-	for (int i = 0; i < cantPixels(bmpData); i++)
+
+void blend(BMPDATA * bmpData,BMPDATA * bmpData2){
+// unsigned char componente;
+// unsigned char componente2;
+// unsigned char result;
+// 	for (int i=0; i<cantPixels(bmpData); i++) {
+// 		componente = bmpData->red[i];
+// 		componente2 = bmpData2->red[i];
+// 		result = mulBlend(componente,componente2);
+// 		bmpData->red[i] =  result;
+
+// 		componente = bmpData->green[i];
+// 		componente2 = bmpData2->green[i];
+// 		result = mulBlend(componente,componente2);
+// 		bmpData->green[i] =result;
+
+// 	    componente = bmpData->blue[i];
+// 		componente2= bmpData2->blue[i];
+// 		result = mulBlend(componente,componente2);
+// 		bmpData->blue[i] = result;
+// 	}
+}
+	
+void blendSIMD(BMPDATA * bmpData, BMPDATA * bmpData2){
+	unsigned char v[3]= {0,0,0};
+	unsigned char v2[3] = {0,0,0};
+	unsigned char r,g,b;
+
+	for (int  i = 0; i < cantPixels(bmpData); i++)
 	{
-		bmpData->red[i]   = 255 - bmpData->red[i];
-		bmpData->green[i] = 255 - bmpData->green[i];
-		bmpData->blue[i]  = 255 - bmpData->blue[i];
-	}
-}
+		v[0]=bmpData->blue[i];
+		v[1]=bmpData->green[i];
+		v[2]=bmpData->red[i];
 
-void escalaDeGrises(BMPDATA *bmpData){
-	for (int i = 0; i < cantPixels(bmpData); i++)
-	{
-		int media = calcularMedia(bmpData->red[i], bmpData->green[i], bmpData->blue[i]);
-		bmpData->red[i]   = media;
-		bmpData->green[i] = media;
-		bmpData->blue[i]  = media;
-	}
-}
+		v2[0]=bmpData2->blue[i];
+		v2[1]=bmpData2->green[i];
+		v2[2]=bmpData2->red[i];
 
-int calcularMedia(int r, int g, int b){
-	int aux = r + g + b;
-	return aux/3;
-}
+		 mulSIMD(v,v2);
+		r = v[0];g = v[1]; b=v[2];
+        	 bmpData->blue[i] = b;
+		 bmpData->green[i] = g;
+		 bmpData->red[i] =r;
 
+	 }
+}
 
 
 /******************************************************************************/
