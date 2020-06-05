@@ -84,9 +84,9 @@ int main(int argc, char *argv[])
 			system("clear");
 			blancoYNegro(&bmpData);
 			end = clock();
-			FILE *out = fopen("resultsBlancoYnegro.csv", "a");
+			FILE *out = fopen("result.csv", "a");
 			int tiempo = end - start;
-			fprintf(out, "%d %s %d", resolucion, " tiempo: ", tiempo);
+			fprintf(out, "\nBlanco y Negro: %d %s %d", resolucion, " tiempo: ", tiempo);
 			fclose(out);
 
 			// imprime tiempo
@@ -106,9 +106,9 @@ int main(int argc, char *argv[])
 			system("clear");
 			aclarar(&bmpData, 50);
 			end = clock();
-			FILE *out1 = fopen("resultadoAclarar.csv", "a");
+			FILE *out1 = fopen("result.csv", "a");
 			int tiempo1 = end - start;
-			fprintf(out1, "%d %s %d", resolucion, " tiempo: ", tiempo1);
+			fprintf(out1, "\nAclarar: %d %s %d", resolucion, " tiempo: ", tiempo1);
 			fclose(out1);
 
 			// imprime tiempo
@@ -128,9 +128,9 @@ int main(int argc, char *argv[])
 			system("clear");
 			medianFilter(&bmpData2);
 			end = clock();
-			FILE *out2 = fopen("resultsMedianFilter.csv", "a");
+			FILE *out2 = fopen("result.csv", "a");
 			int tiempo2 = end - start;
-			fprintf(out2, "%d %s %d", resolucion, " tiempo: ", tiempo2);
+			fprintf(out2, "\nMedian Filter: %d %s %d", resolucion, " tiempo: ", tiempo2);
 			fclose(out2);
 
 			// imprime tiempo
@@ -151,9 +151,9 @@ int main(int argc, char *argv[])
 			system("clear");
 			multiplyBlend(&bmpData3, &bmpData4);
 			end = clock();
-			FILE *out3 = fopen("resultBlend.csv", "a");
+			FILE *out3 = fopen("result.csv", "a");
 			int tiempo3 = end - start;
-			fprintf(out3, "%d %s %d", resolucion, " tiempo: ", tiempo3);
+			fprintf(out3, "\n Blend: %d %s %d", resolucion, " tiempo: ", tiempo3);
 			fclose(out3);
 
 			// imprime tiempo
@@ -184,9 +184,9 @@ int main(int argc, char *argv[])
 			system("clear");
 			negativo(&bmpData3);
 			end = clock();
-			FILE *out4 = fopen("resultNegativo.csv", "a");
+			FILE *out4 = fopen("result.csv", "a");
 			int tiempo4 = end - start;
-			fprintf(out4, "%d %s %d", resolucion, " tiempo: ", tiempo4);
+			fprintf(out4, "\nNegativo: %d %s %d", resolucion, " tiempo: ", tiempo4);
 			fclose(out4);
 
 			// imprime tiempo
@@ -206,9 +206,9 @@ int main(int argc, char *argv[])
 			system("clear");
 			escalaDeGrises(&bmpData3);
 			end = clock();
-			FILE *out5 = fopen("resultEscalaDeGrises.csv", "a");
+			FILE *out5 = fopen("result.csv", "a");
 			int tiempo5 = end - start;
-			fprintf(out5, "%d %s %d", resolucion, " tiempo: ", tiempo5);
+			fprintf(out5, "\n Escala de Gris: %d %s %d", resolucion, " tiempo: ", tiempo5);
 			fclose(out5);
 
 			// imprime tiempo

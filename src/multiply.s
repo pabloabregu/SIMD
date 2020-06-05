@@ -12,7 +12,7 @@ asmMultiply:
 
 	mul 	ecx
 
-	mov		edx, 0			;(edx:eax)
+	mov		edx, 0		;(edx:eax)
 	mov		ecx, 255	;para dividir por 255
 
 	div		ecx

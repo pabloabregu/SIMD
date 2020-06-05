@@ -49,10 +49,8 @@ void filtro(BMPDATA *bmpData, FILTRO filtro)
 
 void blancoYNegro(BMPDATA *bmpData)
 {
-
 	for (int i = 0; i < cantPixels(bmpData); i++)
 	{
-
 		unsigned char y = bmpData->red[i] * 0.11448f + bmpData->green[i] * 0.58661f + bmpData->blue[i] * 0.29891f;
 		bmpData->red[i] = y;
 		bmpData->green[i] = y;
@@ -62,7 +60,6 @@ void blancoYNegro(BMPDATA *bmpData)
 
 void aclarar(BMPDATA *bmpData, int n)
 {
-
 	for (int i = 0; i < cantPixels(bmpData); i++)
 	{
 		unsigned char r = bmpData->red[i];
@@ -80,12 +77,11 @@ void medianFilter(BMPDATA *bmpData)
 	long M = bmpData->infoHeader.biHeight;
 
 	//   Recorremos los pixeles
-	for (int m = 1; m < M - 1; ++m)
-	{ // Alto
-		for (int n = 1; n < N - 1; ++n)
-		{ // Ancho
-			int k = 0;
-			t_Window window; //Inicializamos ventana de pixeles 3x3 ;
+	for (int m = 1; m < M - 1; ++m)	 // Alto
+	{
+		for (int n = 1; n < N - 1; ++n)	// Ancho
+		{ 
+			int k = 0; t_Window window; //Inicializamos ventana de pixeles 3x3 ;
 			for (int j = m - 1; j < m + 2; ++j)
 			{
 				for (int i = n - 1; i < n + 2; ++i)
@@ -94,6 +90,7 @@ void medianFilter(BMPDATA *bmpData)
 					window[k].g = bmpData->green[j * N + i]; //  Carga los pixeles en la ventana 3x3
 					window[k].r = bmpData->red[j * N + i];	 //
 					k++;
+					// BLUE
 					//   Ordenamos los elementos  azules
 					for (int j = 0; j < 5; ++j)
 					{
@@ -112,8 +109,9 @@ void medianFilter(BMPDATA *bmpData)
 						window[j].b = window[min].b;
 						window[min].b = temp;
 					}
-					//   Modificamos la componente azul del pixel de la imagen
-					bmpData->blue[(m - 1) * N + (n - 1)] = window[4].b;
+					bmpData->blue[(m - 1) * N + (n - 1)] = window[4].b;	//  Modificamos la componente azul del pixel de la imagen
+
+					//GREEN
 					//   Ordenamos los elementos verdes
 					for (int j = 0; j < 5; ++j)
 					{
@@ -132,8 +130,9 @@ void medianFilter(BMPDATA *bmpData)
 						window[j].g = window[min].g;
 						window[min].g = temp;
 					}
-					//   Modificamos la componente verde del pixel de la imagen
-					bmpData->green[(m - 1) * N + (n - 1)] = window[4].g;
+					bmpData->green[(m - 1) * N + (n - 1)] = window[4].g;  //   Modificamos la componente verde del pixel de la imagen
+
+					//RED
 					//   Ordenamos los elementos rojos
 					for (int j = 0; j < 5; ++j)
 					{
@@ -152,8 +151,7 @@ void medianFilter(BMPDATA *bmpData)
 						window[j].r = window[min].r;
 						window[min].r = temp;
 					}
-					//   Modificamos la componente roja del pixel de la imagen
-					bmpData->red[(m - 1) * N + (n - 1)] = window[4].r;
+					bmpData->red[(m - 1) * N + (n - 1)] = window[4].r;	//   Modificamos la componente roja del pixel de la imagen
 				}
 			}
 		}
@@ -262,6 +260,5 @@ unsigned char mediana(unsigned char *histo, int imediana)
 
 int cantPixels(BMPDATA *bmpData)
 {
-
 	return bmpData->infoHeader.biWidth * bmpData->infoHeader.biHeight;
 }
