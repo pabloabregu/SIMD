@@ -6,3 +6,6 @@ Trabajo Practico N°2 para Organización del Computador II - SIMD
 
 ### Ejecución
 >*run.sh* se encarga de la ejecucion del programa
+
+### Captura del programa
+![](https://github.com/pabloabregu/SIMD/blob/master/screenshots/Run.png)
