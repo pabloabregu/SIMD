@@ -7,20 +7,22 @@
 #include "lectorBmp.h"
 #include "filtros.h"
 
-
 /*
  * Funciones en asembler
  */
 //extern void blendAsm (char *, char *, char *, int, int, int, int);
 
-
 // DOC_HELP
 
 /******************************************************************************/
-typedef enum { false, true } bool;
+typedef enum
+{
+	false,
+	true
+} bool;
 
-
-int main (int argc, char* argv[]) {
+int main(int argc, char *argv[])
+{
 	printf("Organización del Computador 2.\nTrabajo Práctico Nro. 2\nPrograma para procesamiento de imágenes BMP.\n");
 	int resolucion = 1080;
 	BMPDATA bmpData;
@@ -29,43 +31,40 @@ int main (int argc, char* argv[]) {
 	BMPDATA bmpData4;
 	int i;
 
-	/*printf("Ejecutando con parametros: ");
-	for (i=1 ; i<argc; i++){
-		printf("%s ", argv[i]);
-	}*/
-
 	// carga el archivo bmp
-	if (loadBmpFile ("lena.bmp", &bmpData) != 0) {
-
-		printf ("Error al leer el archivo %s\n\n", "blend2.bmp");
+	if (loadBmpFile("images/lena.bmp", &bmpData) != 0)
+	{
+		printf("Error al leer el archivo %s\n\n", "lena.bmp");
 		return 1;
 	}
-	if (loadBmpFile ("lena_corrompido.bmp", &bmpData2) != 0) {
-
-		printf ("Error al leer el archivo %s\n\n", "blend2.bmp");
+	if (loadBmpFile("images/lena_corrompido.bmp", &bmpData2) != 0)
+	{
+		printf("Error al leer el archivo %s\n\n", "lena_corrompido.bmp");
 		return 1;
 	}
-	if (loadBmpFile ("blend.bmp", &bmpData3) != 0) {
-
-		printf ("Error al leer el archivo %s\n\n", "blend.bmp");
+	if (loadBmpFile("images/blend.bmp", &bmpData3) != 0)
+	{
+		printf("Error al leer el archivo %s\n\n", "blend.bmp");
 		return 1;
 	}
-
-	if (loadBmpFile ("blend2.bmp", &bmpData4) != 0) {
-
-		printf ("Error al leer el archivo %s\n\n", "blend2.bmp");
+	if (loadBmpFile("images/blend2.bmp", &bmpData4) != 0)
+	{
+		printf("Error al leer el archivo %s\n\n", "blend2.bmp");
 		return 1;
 	}
 
 	clock_t start, end;
-	
+
 	// comienza a medir el tiempo
 	start = clock();
-bool salida = false;
-int respuesta;	
-while (!salida) {
-	
-        printf("\n######## Filtros ########\n\n");
+
+	bool salida = false;
+	int respuesta;
+
+	//------------------------INICIO------------------------
+	while (!salida)
+	{
+		printf("\n######## Filtros ########\n\n");
 		printf("1- Blanco y negro\n");
 		printf("2- Aclarar\n");
 		printf("3- Median Filter\n");
@@ -79,180 +78,162 @@ while (!salida) {
 		scanf("%d", &respuesta);
 		fflush(stdin);
 
-		switch(respuesta) {
+		switch (respuesta)
+		{
+		case (1):
+			system("clear");
+			blancoYNegro(&bmpData);
+			end = clock();
+			FILE *out = fopen("resultsBlancoYnegro.csv", "a");
+			int tiempo = end - start;
+			fprintf(out, "%d %s %d", resolucion, " tiempo: ", tiempo);
+			fclose(out);
 
-			case(1):
-			    system("clear");
-				blancoYNegro (&bmpData);
-				end = clock();
-				FILE *out = fopen("resultsBlancoYnegro.csv", "a");  
-				int tiempo = end-start;
-				fprintf(out, "%d %s %d", resolucion, " tiempo: ", tiempo );
-			  	fclose(out); 
+			// imprime tiempo
 
-				// imprime tiempo
-				
-				printf("\nTiempo de proceso: %ld ticks.\n\n", end-start);
+			printf("\nTiempo de proceso: %ld ticks.\n\n", end - start);
 
-				if (saveBmpFile ("resultadoBlancoNegro.bmp", &bmpData) != 0)
-					printf("Error al grabar el archivo!");
-				
-				// libera memoria
-				limpiarBmpData(&bmpData);
-				return 0;
+			if (saveBmpFile("resultadoBlancoNegro.bmp", &bmpData) != 0)
+				printf("Error al grabar el archivo!");
 
-                break;
+			// libera memoria
+			limpiarBmpData(&bmpData);
+			system("eog resultadoBlancoNegro.bmp");
+			return 0;
+			break;
 
-			case(2):
-			    system("clear");
-				aclarar(&bmpData , 50);
-				end = clock();
-				FILE *out1 = fopen("resultadoAclarar.csv", "a");  
-				int tiempo1 = end-start;
-				fprintf(out1, "%d %s %d", resolucion, " tiempo: ", tiempo1 );
-			  	fclose(out1); 
+		case (2):
+			system("clear");
+			aclarar(&bmpData, 50);
+			end = clock();
+			FILE *out1 = fopen("resultadoAclarar.csv", "a");
+			int tiempo1 = end - start;
+			fprintf(out1, "%d %s %d", resolucion, " tiempo: ", tiempo1);
+			fclose(out1);
 
-				// imprime tiempo
-				
-				printf("\nTiempo de proceso: %ld ticks.\n\n", end-start);
+			// imprime tiempo
 
-				if (saveBmpFile ("resultadoAclarar.bmp", &bmpData2) != 0)
-					printf("Error al grabar el archivo!");
-				
-				// libera memoria
-				limpiarBmpData(&bmpData);
-				return 0;
-				
-                break;
+			printf("\nTiempo de proceso: %ld ticks.\n\n", end - start);
 
-			case(3):
-			    system("clear");
-			    medianFilter(&bmpData2);
-				end = clock();
-				FILE *out2 = fopen("resultsMedianFilter.csv", "a");  
-				int tiempo2 = end-start;
-				fprintf(out2, "%d %s %d", resolucion, " tiempo: ", tiempo2 );
-			  	fclose(out2); 
+			if (saveBmpFile("resultadoAclarar.bmp", &bmpData) != 0)
+				printf("Error al grabar el archivo!");
 
-				// imprime tiempo
-				
-				printf("\nTiempo de proceso: %ld ticks.\n\n", end-start);
+			// libera memoria
+			limpiarBmpData(&bmpData);
+			system("eog resultadoAclarar.bmp");
+			return 0;
+			break;
 
-				if (saveBmpFile ("resultadoMedianFilter.bmp", &bmpData2) != 0)
-					printf("Error al grabar el archivo!");
-				
-				// libera memoria
-				limpiarBmpData(&bmpData2);
-				return 0;
-	
+		case (3):
+			system("clear");
+			medianFilter(&bmpData2);
+			end = clock();
+			FILE *out2 = fopen("resultsMedianFilter.csv", "a");
+			int tiempo2 = end - start;
+			fprintf(out2, "%d %s %d", resolucion, " tiempo: ", tiempo2);
+			fclose(out2);
 
-                break;
+			// imprime tiempo
 
-			case(4):
-			    system("clear");
-			  multiplyBlend(&bmpData3,&bmpData4);
-		          end = clock();
-				FILE *out3 = fopen("resultBlend.csv", "a");  
-				int tiempo3 = end-start;
-				fprintf(out3, "%d %s %d", resolucion, " tiempo: ", tiempo3 );
-			  	fclose(out3); 
+			printf("\nTiempo de proceso: %ld ticks.\n\n", end - start);
 
-				// imprime tiempo
-				
-				printf("\nTiempo de proceso: %ld ticks.\n\n", end-start);
+			if (saveBmpFile("resultadoMedianFilter.bmp", &bmpData2) != 0)
+				printf("Error al grabar el archivo!");
 
-				if (saveBmpFile ("resultadoBlend.bmp", &bmpData3) != 0)
-					printf("Error al grabar el archivo!");
-				
-				// libera memoria
-				limpiarBmpData(&bmpData3);
-				limpiarBmpData(&bmpData4);
-				return 0;
+			// libera memoria
+			limpiarBmpData(&bmpData2);
+			system("eog resultadoMedianFilter.bmp");
+			return 0;
 
+			break;
 
+		case (4):
+			system("clear");
+			multiplyBlend(&bmpData3, &bmpData4);
+			end = clock();
+			FILE *out3 = fopen("resultBlend.csv", "a");
+			int tiempo3 = end - start;
+			fprintf(out3, "%d %s %d", resolucion, " tiempo: ", tiempo3);
+			fclose(out3);
 
-                break;
+			// imprime tiempo
 
-			case(5):
-			    system("clear");
+			printf("\nTiempo de proceso: %ld ticks.\n\n", end - start);
+
+			if (saveBmpFile("resultadoBlend.bmp", &bmpData3) != 0)
+				printf("Error al grabar el archivo!");
+
+			// libera memoria
+			limpiarBmpData(&bmpData3);
+			limpiarBmpData(&bmpData4);
+			system("eog resultadoBlend.bmp");
+			return 0;
+
+			break;
+
+		case (5):
+			system("clear");	
 			//blendSIMD(&bmpData3,&bmpData4);
-		break;
-			
-			case(6):
-			  system("clear");
-			  negativo(&bmpData3);
-			    end = clock();
-				FILE *out4 = fopen("resultNegativo.csv", "a");  
-				int tiempo4 = end-start;
-				fprintf(out4, "%d %s %d", resolucion, " tiempo: ", tiempo4 );
-			  	fclose(out4); 
+			printf("-------------.\n");
+			printf("No disponible.\n");
+			printf("-------------.\n");
+			return 0;
+			break;
 
-				// imprime tiempo
-				
-				printf("\nTiempo de proceso: %ld ticks.\n\n", end-start);
+		case (6):
+			system("clear");
+			negativo(&bmpData3);
+			end = clock();
+			FILE *out4 = fopen("resultNegativo.csv", "a");
+			int tiempo4 = end - start;
+			fprintf(out4, "%d %s %d", resolucion, " tiempo: ", tiempo4);
+			fclose(out4);
 
-				if (saveBmpFile ("resultadoNegativo.bmp", &bmpData3) != 0)
-					printf("Error al grabar el archivo!");
-				
-				// libera memoria
-				limpiarBmpData(&bmpData3);
-				return 0;
+			// imprime tiempo
 
+			printf("\nTiempo de proceso: %ld ticks.\n\n", end - start);
 
-		
+			if (saveBmpFile("resultadoNegativo.bmp", &bmpData3) != 0)
+				printf("Error al grabar el archivo!");
 
-		break;		
-			case(7):
-  			  system("clear");
-			  escalaDeGrises(&bmpData3);
- 			  end = clock();
-				FILE *out5 = fopen("resultEscalaDeGrises.csv", "a");  
-				int tiempo5 = end-start;
-				fprintf(out5, "%d %s %d", resolucion, " tiempo: ", tiempo5 );
-			  	fclose(out5); 
+			// libera memoria
+			limpiarBmpData(&bmpData3);
+			system("eog resultadoNegativo.bmp");
+			return 0;
 
-				// imprime tiempo
-				
-				printf("\nTiempo de proceso: %ld ticks.\n\n", end-start);
+			break;
+		case (7):
+			system("clear");
+			escalaDeGrises(&bmpData3);
+			end = clock();
+			FILE *out5 = fopen("resultEscalaDeGrises.csv", "a");
+			int tiempo5 = end - start;
+			fprintf(out5, "%d %s %d", resolucion, " tiempo: ", tiempo5);
+			fclose(out5);
 
-				if (saveBmpFile ("resultadoEscalaDeGrises.bmp", &bmpData3) != 0)
-					printf("Error al grabar el archivo!");
-				
-				// libera memoria
-				limpiarBmpData(&bmpData3);
-				return 0;
-                break;
+			// imprime tiempo
 
-			case(0):
-				salida = true;
-                break;
+			printf("\nTiempo de proceso: %ld ticks.\n\n", end - start);
 
-			default:
-			    system("clear");
-				printf("No ingresaste una opcion correcta.\n");
-				system("pause");
-				system("clear");
-                break;
+			if (saveBmpFile("resultadoEscalaDeGrises.bmp", &bmpData3) != 0)
+				printf("Error al grabar el archivo!");
+
+			// libera memoria
+			limpiarBmpData(&bmpData3);
+			system("eog resultadoEscalaDeGrises.bmp");
+			return 0;
+			break;
+
+		case (0):
+			salida = true;
+			break;
+
+		default:
+			system("clear");
+			printf("No ingresaste una opcion correcta.\n");
+			system("pause");
+			system("clear");
+			break;
 		}
-	
-	
 	}
-
-
-
-
-
-//Llamadas a filtros
-
-	//blancoYNegro (&bmpData);
-	//aclarar(&bmpData , 50);
-//	medianFilter(&bmpData);
-//	blend(&bmpData,&bmpData2);
-//      multiplyBlend(&bmpData,&bmpData2);
-//	blendSIMD(&bmpData,&bmpData2);
-//negativo(&bmpData);
-//escalaDeGrises(&bmpData);
-	
-
 }
-
