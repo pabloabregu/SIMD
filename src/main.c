@@ -32,22 +32,22 @@ int main(int argc, char *argv[])
 	int i;
 
 	// carga el archivo bmp
-	if (loadBmpFile("images/lena.bmp", &bmpData) != 0)
+	if (loadBmpFile("../images/lena.bmp", &bmpData) != 0)
 	{
 		printf("Error al leer el archivo %s\n\n", "lena.bmp");
 		return 1;
 	}
-	if (loadBmpFile("images/lena_corrompido.bmp", &bmpData2) != 0)
+	if (loadBmpFile("../images/lena_corrompido.bmp", &bmpData2) != 0)
 	{
 		printf("Error al leer el archivo %s\n\n", "lena_corrompido.bmp");
 		return 1;
 	}
-	if (loadBmpFile("images/blend.bmp", &bmpData3) != 0)
+	if (loadBmpFile("../images/blend.bmp", &bmpData3) != 0)
 	{
 		printf("Error al leer el archivo %s\n\n", "blend.bmp");
 		return 1;
 	}
-	if (loadBmpFile("images/blend2.bmp", &bmpData4) != 0)
+	if (loadBmpFile("../images/blend2.bmp", &bmpData4) != 0)
 	{
 		printf("Error al leer el archivo %s\n\n", "blend2.bmp");
 		return 1;
